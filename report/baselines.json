@@ -1,0 +1,57 @@
+{
+  "results": {
+    "a_random": {
+      "regret_median": 7131.538068409467,
+      "regret_mean": 45249220.00537623,
+      "regret_p90": 32237586.23417899,
+      "top1_acc": 0.007425044091710758,
+      "zero_regret_share": 0.008939594356261023,
+      "n_cases": 1814400
+    },
+    "b_oracle_static": {
+      "regret_median": 0.31439742357134437,
+      "regret_mean": 1.415771574738048,
+      "regret_p90": 3.4107368441770465,
+      "top1_acc": 0.22938988095238094,
+      "zero_regret_share": 0.3052827380952381,
+      "n_cases": 13440,
+      "model": "Merge_c_o_ID_c_ID/Merge_w_c_ID_w_ID"
+    },
+    "b2_most_frequent_winner": {
+      "regret_median": 0.6820773519691576,
+      "regret_mean": 29.17062533944976,
+      "regret_p90": 44.68571186129122,
+      "top1_acc": 0.29397321428571427,
+      "zero_regret_share": 0.3064732142857143,
+      "n_cases": 13440,
+      "model": "Merge_c_ID_c_o_ID/Merge_w_ID_w_c_ID"
+    },
+    "c_default_cheapest": {
+      "regret_median": 0.31439742357134437,
+      "regret_mean": 1.415771574738048,
+      "regret_p90": 3.4107368441770465,
+      "top1_acc": 0.22938988095238094,
+      "zero_regret_share": 0.3052827380952381,
+      "n_cases": 13440,
+      "model": "Merge_c_o_ID_c_ID/Merge_w_c_ID_w_ID"
+    },
+    "d_per_profile_default": {
+      "regret_median": 0.0,
+      "regret_mean": 23.783589051689688,
+      "regret_p90": 11.818690914505888,
+      "top1_acc": 0.5031994047619047,
+      "zero_regret_share": 0.5328869047619048,
+      "n_cases": 13440
+    },
+    "damoop_star": {
+      "regret_median": 0.0,
+      "regret_mean": 0.13617800921348813,
+      "regret_p90": 0.3409639937844188,
+      "top1_acc": 0.6112351190476191,
+      "zero_regret_share": 0.6113839285714286,
+      "n_cases": 13440
+    }
+  },
+  "most_freq_win_share": 0.29397321428571427,
+  "oracle_static_model": "Merge_c_o_ID_c_ID/Merge_w_c_ID_w_ID"
+}

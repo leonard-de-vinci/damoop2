@@ -1,0 +1,6 @@
+query/size/frequency/max_time in s
+select,c_last,from,Customer,where,balance/132/500/0.1
+select,o_ID,from,Order,where,o_carrier_id/60/1000/100
+select,w_name,from,Warehouse,where,w_city/152/100/0.1
+select,c_last,o_carrier_id,from,Customer,join,Order,c_ID,c_o_ID,where,c_last/170/50/100
+select,balance,w_name,o_carrier_id,from,Order,join,Customer,join,Warehouse,c_ID,c_o_ID,w_ID,w_c_ID,where,c_last,w_city/170/10/100

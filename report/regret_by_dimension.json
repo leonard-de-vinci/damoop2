@@ -1,0 +1,38 @@
+[
+  {
+    "objective": "composite",
+    "regret_median": 0.0,
+    "regret_mean": 0.13617800921348813,
+    "regret_p90": 0.3409639937844188,
+    "top1_acc": 0.6112351190476191,
+    "zero_regret_share": 0.6112351190476191,
+    "n_cases": 13440
+  },
+  {
+    "objective": "time",
+    "regret_median": 0.0,
+    "regret_mean": 0.427850921010537,
+    "regret_p90": 0.848006350871414,
+    "top1_acc": 0.5420386904761905,
+    "zero_regret_share": 0.5453869047619048,
+    "n_cases": 13440
+  },
+  {
+    "objective": "env",
+    "regret_median": 8.767629261202835e-05,
+    "regret_mean": 0.06078210862837908,
+    "regret_p90": 0.1685552991840207,
+    "top1_acc": 0.45669642857142856,
+    "zero_regret_share": 0.45669642857142856,
+    "n_cases": 13440
+  },
+  {
+    "objective": "fin",
+    "regret_median": 0.0,
+    "regret_mean": 0.0011772655743849786,
+    "regret_p90": 4.355009167939957e-16,
+    "top1_acc": 0.46279761904761907,
+    "zero_regret_share": 0.6147321428571428,
+    "n_cases": 13440
+  }
+]

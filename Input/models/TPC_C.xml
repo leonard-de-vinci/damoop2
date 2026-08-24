@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<DataStore xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" dsName="OrderManagement">
+            	
+    
+    
+    <concepts cName="Warehouse">
+                        		
+        
+        
+        <row rName="r_Warehouse">
+                                    			
+            
+            
+            <key_value kvName="kv_Warehouse_1">
+                                                				
+                
+                
+                <key kName="w_ID" kType="Oid"/>
+                                                				
+                
+                
+                <value vName="v_w_ID" xsi:type="metamodel:AtomicValue"/>
+                                                			
+            
+            
+            </key_value>
+                                    			
+            
+            
+            <key_value kvName="kv_Warehouse_2">
+                                                				
+                
+                
+                <key kName="w_name" kType=""/>
+                                                				
+                
+                
+                <value vName="v_w_name" xsi:type="metamodel:AtomicValue"/>
+                                                			
+            
+            
+            </key_value>
+                                    			
+            
+            
+            <key_value kvName="kv_Warehouse_3">
+                                                				
+                
+                
+                <key kName="w_city" kType=""/>
+                                                				
+                
+                
+                <value vName="v_w_city" xsi:type="metamodel:AtomicValue"/>
+                                                			
+            
+            
+            </key_value>
+            
+            <key_value kvName="kv_Warehouse_4">
+                <key kName="w_tax" kType=""/>
+                <value vName="v_w_tax" xsi:type="metamodel:AtomicValue"/>
+            </key_value>
+                                    		
+        
+        
+        </row>
+                        	
+    
+    
+    </concepts>
+            	
+    
+    
+    <concepts cName="Customer">
+                        		
+        
+        
+        <row rName="r_Customer">
+                                    			
+            
+            
+            <key_value kvName="kv_Customer_1">
+                                                				
+                
+                
+                <key kName="c_ID" kType="Oid"/>
+                                                				
+                
+                
+                <value vName="v_c_ID" xsi:type="metamodel:AtomicValue"/>
+                                                			
+            
+            
+            </key_value>
+                                    			
+            
+            
+            <key_value kvName="kv_Customer_2">
+                                                				
+                
+                
+                <key kName="c_last" kType=""/>
+                                                				
+                
+                
+                <value vName="v_c_last" xsi:type="metamodel:AtomicValue"/>
+                                                			
+            
+            
+            </key_value>
+                                    			
+            
+            
+            <key_value kvName="kv_Customer_3">
+                                                				
+                
+                
+                <key kName="balance" kType=""/>
+                                                				
+                
+                
+                <value vName="v_balance" xsi:type="metamodel:AtomicValue"/>
+                                                			
+            
+            
+            </key_value>
+                                    			
+            
+            
+            <key_value kvName="kv_Customer_4">
+                                                				
+                
+                
+                <key kName="w_c_ID" kType="fk"/>
+                                                				
+                
+                
+                <value vName="v_w_c_ID" xsi:type="metamodel:AtomicValue"/>
+                                                			
+            
+            
+            </key_value>
+            
+            <key_value kvName="kv_Customer_5">
+                <key kName="c_credit" kType=""/>
+                <value vName="v_c_credit" xsi:type="metamodel:AtomicValue"/>
+            </key_value>
+                                    		
+        
+        
+        </row>
+                        	
+    
+    
+    </concepts>
+            	
+    
+    
+    <concepts cName="Order">
+                        		
+        
+        
+        <row rName="r_Order">
+                                    			
+            
+            
+            <key_value kvName="kv_Order_1">
+                                                				
+                
+                
+                <key kName="o_ID" kType="Oid"/>
+                                                				
+                
+                
+                <value vName="v_o_ID" xsi:type="metamodel:AtomicValue"/>
+                                                			
+            
+            
+            </key_value>
+                                    			
+            
+            
+            <key_value kvName="kv_Order_2">
+                                                				
+                
+                
+                <key kName="o_carrier_id" kType=""/>
+                                                				
+                
+                
+                <value vName="v_o_carrier_id" xsi:type="metamodel:AtomicValue"/>
+                                                			
+            
+            
+            </key_value>
+                                    			
+            
+            
+            <key_value kvName="kv_Order_3">
+                                                				
+                
+                
+                <key kName="c_o_ID" kType="fk"/>
+                                                				
+                
+                
+                <value vName="v_c_o_ID" xsi:type="metamodel:AtomicValue"/>
+                                                			
+            
+            
+            </key_value>
+            
+            <key_value kvName="kv_Order_4">
+                <key kName="o_ol_cnt" kType=""/>
+                <value vName="v_o_ol_cnt" xsi:type="metamodel:AtomicValue"/>
+            </key_value>
+                                    		
+        
+        
+        </row>
+                        	
+    
+    
+    </concepts>
+            	
+    
+    
+    <reference rName="serves" source="w_ID" target="w_c_ID"/>
+            	
+    
+    
+    <reference rName="orders" source="c_ID" target="c_o_ID"/>
+            
+
+
+</DataStore>

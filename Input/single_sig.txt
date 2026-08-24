@@ -1,0 +1,2 @@
+Customer{(c_ID,c_last,balance,w_c_ID,c_credit)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_name,w_city,w_tax)}|orders(c_ID,c_o_ID)|serves(w_ID,w_c_ID) 
+GeneratedDMs

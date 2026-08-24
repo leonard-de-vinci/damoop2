@@ -1,0 +1,5 @@
+c_last,balance
+o_carrier_id,o_ID
+w_name,w_city
+c_last,o_carrier_id,c_ID,c_o_ID
+balance,w_name,o_carrier_id,c_ID,c_o_ID,w_ID,w_c_ID,c_last,w_city

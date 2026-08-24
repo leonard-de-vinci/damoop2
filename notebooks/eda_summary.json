@@ -1,0 +1,97 @@
+{
+  "integrity": {
+    "grid_complete": true,
+    "dupes": 0,
+    "total_nulls": 0,
+    "total_nonpos": 0,
+    "unit_nan_share": 0.0,
+    "unit_zero_share": 0.0
+  },
+  "coverage_min_span": 0.997,
+  "idx_flag_balance": {
+    "idx_balance": 0.5,
+    "idx_c_credit": 0.5,
+    "idx_c_last": 0.5,
+    "idx_o_carrier_id": 0.5,
+    "idx_o_ol_cnt": 0.5,
+    "idx_w_city": 0.5,
+    "idx_w_name": 0.5,
+    "idx_w_tax": 0.5
+  },
+  "nn_median": 1.1769023410617923,
+  "nn_max_ratio": 1.4214162426921442,
+  "corner_gaps": {
+    "all-min sel/counts + all-indexed": 1.657,
+    "all-min sel/counts + no-index": 1.501,
+    "all-max sel/counts + all-indexed": 1.582,
+    "all-max sel/counts + no-index": 1.462
+  },
+  "skew_raw_total_time": 5.7,
+  "skew_log1p_total_time": 0.25,
+  "amplification": [
+    {
+      "log_error_sigma": 0.1,
+      "raw_rel_err_p50": 0.068,
+      "raw_rel_err_p90": 0.168,
+      "raw_rel_err_p99": 0.279
+    },
+    {
+      "log_error_sigma": 0.2,
+      "raw_rel_err_p50": 0.136,
+      "raw_rel_err_p90": 0.336,
+      "raw_rel_err_p99": 0.617
+    },
+    {
+      "log_error_sigma": 0.3,
+      "raw_rel_err_p50": 0.203,
+      "raw_rel_err_p90": 0.508,
+      "raw_rel_err_p99": 1.045
+    },
+    {
+      "log_error_sigma": 0.45,
+      "raw_rel_err_p50": 0.301,
+      "raw_rel_err_p90": 0.801,
+      "raw_rel_err_p99": 1.903
+    },
+    {
+      "log_error_sigma": 0.6,
+      "raw_rel_err_p50": 0.391,
+      "raw_rel_err_p90": 1.182,
+      "raw_rel_err_p99": 3.16
+    }
+  ],
+  "tweedie_power": 1.99,
+  "grid_explained_var": 0.8539,
+  "residual_std_log": 3.2732,
+  "top_spearman": {
+    "customer_count": 0.846,
+    "order_count": 0.111,
+    "idx_o_carrier_id": -0.107,
+    "idx_balance": -0.074,
+    "idx_o_ol_cnt": 0.067
+  },
+  "max_abs_spearman": 0.8461378430470013,
+  "max_mi": 1.3888921184772798,
+  "distinct_winners": 25,
+  "top_winner_share": 0.288,
+  "margin_p50": 0.0145,
+  "mean_rank_corr_between_configs": 0.785,
+  "workload_winner_variety_mean": 2.07,
+  "outlier_profiles": 0,
+  "outliers_at_edges": true,
+  "profile_cost_linear_r2": 0.963,
+  "checks": {
+    "grid_complete": true,
+    "unit_costs_clean": true,
+    "dims_span_configured_ranges": true,
+    "no_large_interior_gaps": true,
+    "corners_anchored": true,
+    "residual_signal_present": true,
+    "winner_varies": true,
+    "ordering_learnable_not_trivial": true,
+    "winner_responds_to_workload": true,
+    "outliers_explainable": true
+  },
+  "verdict": "GO",
+  "objective_recommendation": "XGBoost reg:gamma (constant-CV regime); judge by RAW relative error. Plain log1p+MSE amplifies: at sigma=0.3 log error, p90 raw error is already 51%."
+}

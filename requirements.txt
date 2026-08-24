@@ -1,0 +1,16 @@
+# Dashboard core
+streamlit
+pandas
+numpy
+plotly
+
+# Datasets (Parquet read/write for sweep + scenario datasets)
+pyarrow
+
+# ML training & prediction (Profile Sweep -> train -> Predict page)
+scikit-learn
+xgboost
+scipy
+
+# Notebooks only
+matplotlib
