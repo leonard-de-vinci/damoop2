@@ -1,0 +1,407 @@
+[Cost] Signature file: Input/signatures_TPC_C.txt
+DataModel 1 started > Customer{(c_ID,c_last,balance,w_c_ID,c_credit)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_name,w_city,w_tax)}|orders(c_ID,c_o_ID)|serves(w_ID,w_c_ID) 
+DataModel 1	 done
+DataModel 3 started > Customer{(c_ID,c_last,balance,w_c_ID,c_credit)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|orders(c_ID,c_o_ID)|serves(w_ID,w_c_ID) 
+DataModel 2 started > Customer{(c_ID,c_last,balance,w_c_ID,c_credit)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city,w_tax);(w_ID,w_name)}|orders(c_ID,c_o_ID)|serves(w_ID,w_c_ID) 
+DataModel 4 started > Customer{(c_ID,balance,c_last);(c_ID,w_c_ID,c_credit)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|orders(c_ID,c_o_ID)|serves(w_ID,w_c_ID) 
+DataModel 5 started > Customer{(c_ID,balance);(c_ID,c_last);(c_ID,w_c_ID,c_credit)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|orders(c_ID,c_o_ID)|serves(w_ID,w_c_ID) 
+DataModel 6 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last);(c_ID,w_c_ID)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|orders(c_ID,c_o_ID)|serves(w_ID,w_c_ID) 
+DataModel 7 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last);(c_ID,w_c_ID)}|Order{(o_ID,c_o_ID,o_ol_cnt);(o_ID,o_carrier_id)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|orders(c_ID,c_o_ID)|serves(w_ID,w_c_ID) 
+DataModel 8 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last);(c_ID,w_c_ID)}|Order{(o_ID,c_o_ID);(o_ID,o_carrier_id);(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|orders(c_ID,c_o_ID)|serves(w_ID,w_c_ID) 
+DataModel 9 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last)}|Order{(o_ID,c_o_ID);(o_ID,o_carrier_id);(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}|orders(c_ID,c_o_ID) 
+DataModel 10 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last);(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,c_o_ID);(o_ID,o_carrier_id);(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}|orders(c_ID,c_o_ID) 
+DataModel 3	 done
+DataModel 2	 done
+DataModel 4	 done
+DataModel 8	 done
+DataModel 7	 done
+End: 2
+End: 1
+DataModel 11 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,c_o_ID));(c_ID,c_last);(c_ID,w_c_ID)}|Order{(o_ID,o_carrier_id);(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 6	 done
+DataModel 12 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,c_o_ID));(c_ID,c_last)}|Order{(o_ID,o_carrier_id);(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}
+DataModel 5	 done
+End: 3
+DataModel 13 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,c_o_ID));(c_ID,c_last);(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,o_carrier_id);(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 9	 done
+DataModel 10	 done
+End: 6
+DataModel 14 started > Customer{(c_ID,balance);(c_ID,c_last);(c_ID,w_c_ID)}|Order{(o_ID,c_o_ID,c_ID_cv(c_ID,c_credit));(o_ID,o_carrier_id);(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+End: 5
+DataModel 15 started > Customer{(c_ID,balance);(c_ID,c_last)}|Order{(o_ID,c_o_ID,c_ID_cv(c_ID,c_credit));(o_ID,o_carrier_id);(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}
+End: 9
+DataModel 16 started > Customer{(c_ID,balance);(c_ID,c_last);(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,c_o_ID,c_ID_cv(c_ID,c_credit));(o_ID,o_carrier_id);(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 12	 done
+End: 4
+DataModel 17 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last)}|Order{(o_ID,c_o_ID,o_ol_cnt);(o_ID,o_carrier_id)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}|orders(c_ID,c_o_ID) 
+End: 7
+DataModel 18 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last);(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,c_o_ID,o_ol_cnt);(o_ID,o_carrier_id)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}|orders(c_ID,c_o_ID) 
+End: 8
+DataModel 19 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,c_o_ID,o_ol_cnt));(c_ID,c_last);(c_ID,w_c_ID)}|Order{(o_ID,o_carrier_id)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+End: 11
+DataModel 11	 done
+DataModel 13	 done
+DataModel 20 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,c_o_ID,o_ol_cnt));(c_ID,c_last)}|Order{(o_ID,o_carrier_id)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}
+End: 12
+DataModel 21 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,c_o_ID,o_ol_cnt));(c_ID,c_last);(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,o_carrier_id)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+End: 10
+DataModel 22 started > Customer{(c_ID,balance);(c_ID,c_last);(c_ID,w_c_ID)}|Order{(o_ID,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_credit));(o_ID,o_carrier_id)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 14	 done
+DataModel 15	 done
+End: 13
+DataModel 23 started > Customer{(c_ID,balance);(c_ID,c_last)}|Order{(o_ID,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_credit));(o_ID,o_carrier_id)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}
+End: 14
+DataModel 24 started > Customer{(c_ID,balance);(c_ID,c_last);(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_credit));(o_ID,o_carrier_id)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 16	 done
+End: 15
+DataModel 25 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last);(c_ID,w_c_ID)}|Order{(o_ID,c_o_ID);(o_ID,o_carrier_id,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|orders(c_ID,c_o_ID)|serves(w_ID,w_c_ID) 
+DataModel 17	 done
+DataModel 18	 done
+End: 16
+DataModel 26 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last)}|Order{(o_ID,c_o_ID);(o_ID,o_carrier_id,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}|orders(c_ID,c_o_ID) 
+End: 17
+DataModel 27 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last);(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,c_o_ID);(o_ID,o_carrier_id,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}|orders(c_ID,c_o_ID) 
+DataModel 19	 done
+DataModel 20	 done
+End: 18
+DataModel 28 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,c_o_ID));(c_ID,c_last);(c_ID,w_c_ID)}|Order{(o_ID,o_carrier_id,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+End: 19
+DataModel 29 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,c_o_ID));(c_ID,c_last)}|Order{(o_ID,o_carrier_id,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}
+DataModel 21	 done
+DataModel 22	 done
+End: 20
+DataModel 30 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,c_o_ID));(c_ID,c_last);(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,o_carrier_id,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+End: 21
+DataModel 31 started > Customer{(c_ID,balance);(c_ID,c_last);(c_ID,w_c_ID)}|Order{(o_ID,c_o_ID,c_ID_cv(c_ID,c_credit));(o_ID,o_carrier_id,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 25	 done
+DataModel 23	 done
+End: 24
+DataModel 32 started > Customer{(c_ID,balance);(c_ID,c_last)}|Order{(o_ID,c_o_ID,c_ID_cv(c_ID,c_credit));(o_ID,o_carrier_id,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}
+End: 22
+DataModel 33 started > Customer{(c_ID,balance);(c_ID,c_last);(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,c_o_ID,c_ID_cv(c_ID,c_credit));(o_ID,o_carrier_id,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 24	 done
+End: 23
+DataModel 34 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last);(c_ID,w_c_ID)}|Order{(o_ID,c_o_ID,o_carrier_id);(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|orders(c_ID,c_o_ID)|serves(w_ID,w_c_ID) 
+DataModel 26	 done
+End: 25
+DataModel 35 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last)}|Order{(o_ID,c_o_ID,o_carrier_id);(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}|orders(c_ID,c_o_ID) 
+DataModel 27	 done
+End: 26
+DataModel 36 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last);(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,c_o_ID,o_carrier_id);(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}|orders(c_ID,c_o_ID) 
+DataModel 29	 done
+DataModel 28	 done
+End: 28
+DataModel 37 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,c_o_ID,o_carrier_id));(c_ID,c_last);(c_ID,w_c_ID)}|Order{(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+End: 27
+DataModel 38 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,c_o_ID,o_carrier_id));(c_ID,c_last)}|Order{(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}
+DataModel 30	 done
+End: 29
+DataModel 39 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,c_o_ID,o_carrier_id));(c_ID,c_last);(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 31	 done
+End: 30
+DataModel 40 started > Customer{(c_ID,balance);(c_ID,c_last);(c_ID,w_c_ID)}|Order{(o_ID,c_o_ID,o_carrier_id,c_ID_cv(c_ID,c_credit));(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 33	 done
+DataModel 32	 done
+End: 32
+DataModel 41 started > Customer{(c_ID,balance);(c_ID,c_last)}|Order{(o_ID,c_o_ID,o_carrier_id,c_ID_cv(c_ID,c_credit));(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}
+End: 31
+DataModel 42 started > Customer{(c_ID,balance);(c_ID,c_last);(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,c_o_ID,o_carrier_id,c_ID_cv(c_ID,c_credit));(o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 34	 done
+End: 33
+DataModel 43 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}|orders(c_ID,c_o_ID) 
+DataModel 35	 done
+End: 34
+DataModel 44 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last);(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}|orders(c_ID,c_o_ID) 
+DataModel 36	 done
+DataModel 37	 done
+End: 35
+DataModel 45 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt));(c_ID,c_last);(c_ID,w_c_ID)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+End: 36
+DataModel 46 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt));(c_ID,c_last)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}
+DataModel 38	 done
+End: 37
+DataModel 47 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt));(c_ID,c_last);(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 39	 done
+End: 38
+DataModel 48 started > Customer{(c_ID,balance);(c_ID,c_last);(c_ID,w_c_ID)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 40	 done
+End: 39
+DataModel 49 started > Customer{(c_ID,balance);(c_ID,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}
+DataModel 41	 done
+End: 40
+DataModel 50 started > Customer{(c_ID,balance);(c_ID,c_last);(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 42	 done
+End: 41
+DataModel 51 started > Customer{(c_ID,balance);(c_ID,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID,c_credit))}|orders(c_ID,c_o_ID) 
+DataModel 43	 done
+End: 42
+DataModel 52 started > Customer{(c_ID,balance);(c_ID,c_last);(c_ID,w_c_ID,c_credit,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}|orders(c_ID,c_o_ID) 
+DataModel 44	 done
+End: 43
+DataModel 53 started > Customer{(c_ID,balance);(c_ID,c_last);(c_ID,w_c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 45	 done
+End: 44
+DataModel 54 started > Customer{(c_ID,balance);(c_ID,c_last)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)))}
+DataModel 46	 done
+DataModel 48	 done
+End: 45
+DataModel 55 started > Customer{(c_ID,balance);(c_ID,c_last);(c_ID,w_c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt),w_ID_cv(w_ID,w_tax))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 47	 done
+End: 47
+DataModel 56 started > Customer{(c_ID,balance);(c_ID,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,w_c_ID,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 50	 done
+End: 46
+DataModel 57 started > Customer{(c_ID,balance);(c_ID,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID,c_credit))}
+End: 49
+DataModel 58 started > Customer{(c_ID,balance);(c_ID,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,w_c_ID,c_credit,w_ID_cv(w_ID,w_tax)))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 51	 done
+DataModel 52	 done
+DataModel 49	 done
+End: 50
+DataModel 59 started > Customer{(c_ID,balance,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID,c_credit))}|orders(c_ID,c_o_ID) 
+End: 48
+DataModel 60 started > Customer{(c_ID,balance,c_last);(c_ID,w_c_ID,c_credit,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}|orders(c_ID,c_o_ID) 
+End: 51
+DataModel 61 started > Customer{(c_ID,balance,c_last);(c_ID,w_c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 57	 done
+End: 56
+DataModel 62 started > Customer{(c_ID,balance,c_last)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)))}
+DataModel 58	 done
+End: 57
+DataModel 63 started > Customer{(c_ID,balance,c_last);(c_ID,w_c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt),w_ID_cv(w_ID,w_tax))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 54	 done
+DataModel 61	 done
+DataModel 59	 done
+End: 53
+DataModel 64 started > Customer{(c_ID,balance,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,w_c_ID,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+End: 58
+DataModel 65 started > Customer{(c_ID,balance,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID,c_credit))}
+End: 60
+DataModel 66 started > Customer{(c_ID,balance,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,w_c_ID,c_credit,w_ID_cv(w_ID,w_tax)))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 56	 done
+DataModel 53	 done
+End: 52
+DataModel 67 started > Customer{(c_ID,balance,c_credit);(c_ID,c_last,w_c_ID)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|orders(c_ID,c_o_ID)|serves(w_ID,w_c_ID) 
+DataModel 60	 done
+DataModel 62	 done
+DataModel 66	 done
+DataModel 64	 done
+End: 55
+DataModel 68 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last,w_c_ID)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|orders(c_ID,c_o_ID)|serves(w_ID,w_c_ID) 
+End: 61
+DataModel 69 started > Customer{(c_ID,balance);(c_ID,c_credit)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,c_last,w_c_ID))}|orders(c_ID,c_o_ID) 
+End: 65
+DataModel 70 started > Customer{(c_ID,balance);(c_ID,c_credit);(c_ID,c_last,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}|orders(c_ID,c_o_ID) 
+End: 59
+DataModel 71 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt));(c_ID,c_last,w_c_ID)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+End: 63
+DataModel 72 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,c_last,w_c_ID))}
+DataModel 63	 done
+DataModel 67	 done
+End: 66
+DataModel 73 started > Customer{(c_ID,balance);(c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt));(c_ID,c_last,w_c_ID,w_ID_cv(w_ID,w_tax))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+End: 62
+DataModel 74 started > Customer{(c_ID,balance);(c_ID,c_last,w_c_ID)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 65	 done
+End: 64
+DataModel 75 started > Customer{(c_ID,balance)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,c_last,w_c_ID))}
+DataModel 55	 done
+End: 54
+DataModel 76 started > Customer{(c_ID,balance);(c_ID,c_last,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 69	 done
+End: 68
+DataModel 77 started > Customer{(c_ID,balance,c_credit)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,c_last,w_c_ID))}|orders(c_ID,c_o_ID) 
+DataModel 73	 done
+End: 72
+DataModel 78 started > Customer{(c_ID,balance,c_credit);(c_ID,c_last,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}|orders(c_ID,c_o_ID) 
+DataModel 74	 done
+DataModel 68	 done
+End: 73
+DataModel 79 started > Customer{(c_ID,balance,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt));(c_ID,c_last,w_c_ID)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+End: 67
+DataModel 80 started > Customer{(c_ID,balance,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,c_last,w_c_ID))}
+DataModel 75	 done
+End: 74
+DataModel 81 started > Customer{(c_ID,balance,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt));(c_ID,c_last,w_c_ID,w_ID_cv(w_ID,w_tax))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 71	 done
+DataModel 70	 done
+End: 70
+DataModel 82 started > Customer{(c_ID,c_last,w_c_ID)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,balance,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+End: 69
+DataModel 83 started > Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,balance,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,c_last,w_c_ID))}
+DataModel 78	 done
+DataModel 76	 done
+End: 77
+DataModel 84 started > Customer{(c_ID,c_last,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,balance,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+End: 75
+DataModel 85 started > Customer{(c_ID,balance,c_credit,c_last);(c_ID,w_c_ID)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|orders(c_ID,c_o_ID)|serves(w_ID,w_c_ID) 
+DataModel 80	 done
+End: 79
+DataModel 86 started > Customer{(c_ID,balance,c_credit,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}|orders(c_ID,c_o_ID) 
+DataModel 72	 done
+End: 71
+DataModel 87 started > Customer{(c_ID,balance,c_credit,c_last);(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}|orders(c_ID,c_o_ID) 
+DataModel 82	 done
+End: 81
+DataModel 88 started > Customer{(c_ID,balance,c_credit,c_last);(c_ID,w_c_ID,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 77	 done
+DataModel 79	 done
+End: 76
+DataModel 89 started > Customer{(c_ID,balance,c_credit,c_last)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)))}
+End: 78
+DataModel 90 started > Customer{(c_ID,balance,c_credit,c_last);(c_ID,w_c_ID,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt),w_ID_cv(w_ID,w_tax))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 81	 done
+End: 80
+DataModel 91 started > Customer{(c_ID,balance,c_credit,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,w_c_ID))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 84	 done
+End: 83
+DataModel 92 started > Customer{(c_ID,balance,c_credit,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,w_c_ID))}
+DataModel 86	 done
+DataModel 85	 done
+End: 85
+DataModel 93 started > Customer{(c_ID,balance,c_credit,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,w_c_ID,w_ID_cv(w_ID,w_tax)))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 87	 done
+End: 84
+DataModel 94 started > Customer{(c_ID,balance,c_last,w_c_ID);(c_ID,c_credit)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|orders(c_ID,c_o_ID)|serves(w_ID,w_c_ID) 
+End: 86
+DataModel 95 started > Customer{(c_ID,balance,w_c_ID);(c_ID,c_credit);(c_ID,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|orders(c_ID,c_o_ID)|serves(w_ID,w_c_ID) 
+DataModel 88	 done
+End: 87
+DataModel 96 started > Customer{(c_ID,c_credit);(c_ID,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,balance,w_c_ID))}|orders(c_ID,c_o_ID) 
+DataModel 91	 done
+End: 90
+DataModel 97 started > Customer{(c_ID,balance,w_c_ID,w_ID_cv(w_ID,w_tax));(c_ID,c_credit);(c_ID,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}|orders(c_ID,c_o_ID) 
+DataModel 94	 done
+End: 93
+DataModel 98 started > Customer{(c_ID,balance,w_c_ID);(c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt));(c_ID,c_last)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 95	 done
+DataModel 90	 done
+End: 89
+End: 94
+DataModel 100 started > Customer{(c_ID,balance,w_c_ID,w_ID_cv(w_ID,w_tax));(c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt));(c_ID,c_last)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 99 started > Customer{(c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt));(c_ID,c_last)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,balance,w_c_ID))}
+DataModel 98	 done
+End: 97
+DataModel 101 started > Customer{(c_ID,balance,w_c_ID);(c_ID,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 93	 done
+DataModel 92	 done
+End: 92
+DataModel 102 started > Customer{(c_ID,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,balance,w_c_ID))}
+End: 91
+DataModel 103 started > Customer{(c_ID,balance,w_c_ID,w_ID_cv(w_ID,w_tax));(c_ID,c_last)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 97	 done
+DataModel 100	 done
+End: 96
+DataModel 104 started > Customer{(c_ID,c_credit)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,balance,c_last,w_c_ID))}|orders(c_ID,c_o_ID) 
+End: 99
+DataModel 105 started > Customer{(c_ID,balance,c_last,w_c_ID,w_ID_cv(w_ID,w_tax));(c_ID,c_credit)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}|orders(c_ID,c_o_ID) 
+DataModel 96	 done
+End: 95
+DataModel 106 started > Customer{(c_ID,balance,c_last,w_c_ID);(c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 101	 done
+End: 100
+DataModel 107 started > Customer{(c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,balance,c_last,w_c_ID))}
+DataModel 99	 done
+DataModel 105	 done
+End: 98
+DataModel 108 started > Customer{(c_ID,balance,c_last,w_c_ID,w_ID_cv(w_ID,w_tax));(c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+End: 104
+DataModel 109 started > Customer{(c_ID,balance,c_last,w_c_ID)}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 103	 done
+End: 102
+DataModel 110 started > Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,balance,c_last,w_c_ID))}
+DataModel 89	 done
+End: 88
+DataModel 111 started > Customer{(c_ID,balance,c_last,w_c_ID,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+DataModel 110	 done
+DataModel 102	 done
+End: 109
+DataModel 112 started > Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,c_last,balance,w_c_ID,c_credit))}|orders(c_ID,c_o_ID) 
+End: 101
+DataModel 113 started > Customer{(c_ID,c_last,balance,w_c_ID,c_credit,w_ID_cv(w_ID,w_tax))}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name)}|orders(c_ID,c_o_ID) 
+DataModel 108	 done
+End: 107
+DataModel 114 started > Customer{(c_ID,c_last,balance,w_c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 107	 done
+End: 106
+DataModel 115 started > Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,c_last,balance,w_c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)))}
+DataModel 106	 done
+DataModel 111	 done
+End: 105
+DataModel 116 started > Customer{(c_ID,c_last,balance,w_c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt),w_ID_cv(w_ID,w_tax))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+End: 110
+DataModel 117 started > Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_last,balance,w_c_ID,c_credit))}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 104	 done
+DataModel 83	 done
+End: 82
+DataModel 118 started > Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city);(w_ID,w_name);(w_ID,w_tax,w_c_ID_cv(c_ID,c_last,balance,w_c_ID,c_credit))}
+DataModel 114	 done
+End: 103
+DataModel 119 started > Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_last,balance,w_c_ID,c_credit,w_ID_cv(w_ID,w_tax)))}|Warehouse{(w_ID,w_city);(w_ID,w_name)}
+End: 113
+DataModel 120 started > Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city,w_tax,w_c_ID_cv(c_ID,c_last,balance,w_c_ID,c_credit));(w_ID,w_name)}|orders(c_ID,c_o_ID) 
+DataModel 117	 done
+End: 116
+DataModel 121 started > Customer{(c_ID,c_last,balance,w_c_ID,c_credit,w_ID_cv(w_ID,w_city,w_tax))}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_name)}|orders(c_ID,c_o_ID) 
+DataModel 113	 done
+End: 112
+DataModel 122 started > Customer{(c_ID,c_last,balance,w_c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt))}|Warehouse{(w_ID,w_city,w_tax);(w_ID,w_name)}|serves(w_ID,w_c_ID) 
+DataModel 115	 done
+End: 114
+DataModel 123 started > Warehouse{(w_ID,w_city,w_tax,w_c_ID_cv(c_ID,c_last,balance,w_c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)));(w_ID,w_name)}
+DataModel 118	 done
+DataModel 112	 done
+End: 117
+DataModel 124 started > Customer{(c_ID,c_last,balance,w_c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt),w_ID_cv(w_ID,w_city,w_tax))}|Warehouse{(w_ID,w_name)}
+End: 111
+DataModel 125 started > Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_last,balance,w_c_ID,c_credit))}|Warehouse{(w_ID,w_city,w_tax);(w_ID,w_name)}|serves(w_ID,w_c_ID) 
+DataModel 123	 done
+End: 122
+DataModel 126 started > Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_city,w_tax,w_c_ID_cv(c_ID,c_last,balance,w_c_ID,c_credit));(w_ID,w_name)}
+DataModel 116	 done
+End: 115
+DataModel 127 started > Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_last,balance,w_c_ID,c_credit,w_ID_cv(w_ID,w_city,w_tax)))}|Warehouse{(w_ID,w_name)}
+DataModel 121	 done
+End: 120
+DataModel 128 started > Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_name,w_city,w_tax,w_c_ID_cv(c_ID,c_last,balance,w_c_ID,c_credit))}|orders(c_ID,c_o_ID) 
+DataModel 124	 done
+End: 123
+DataModel 129 started > Customer{(c_ID,c_last,balance,w_c_ID,c_credit,w_ID_cv(w_ID,w_name,w_city,w_tax))}|Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|orders(c_ID,c_o_ID) 
+DataModel 120	 done
+DataModel 126	 done
+End: 125
+DataModel 130 started > Customer{(c_ID,c_last,balance,w_c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt))}|Warehouse{(w_ID,w_name,w_city,w_tax)}|serves(w_ID,w_c_ID) 
+End: 119
+DataModel 131 started > Warehouse{(w_ID,w_name,w_city,w_tax,w_c_ID_cv(c_ID,c_last,balance,w_c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)))}
+DataModel 119	 done
+End: 118
+DataModel 132 started > Customer{(c_ID,c_last,balance,w_c_ID,c_credit,c_o_ID_cv(o_ID,o_carrier_id,c_o_ID,o_ol_cnt),w_ID_cv(w_ID,w_name,w_city,w_tax))}
+DataModel 129	 done
+End: 128
+DataModel 133 started > Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_last,balance,w_c_ID,c_credit))}|Warehouse{(w_ID,w_name,w_city,w_tax)}|serves(w_ID,w_c_ID) 
+DataModel 109	 done
+DataModel 125	 done
+End: 108
+DataModel 134 started > Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt)}|Warehouse{(w_ID,w_name,w_city,w_tax,w_c_ID_cv(c_ID,c_last,balance,w_c_ID,c_credit))}
+DataModel 122	 done
+End: 124
+DataModel 135 started > Order{(o_ID,o_carrier_id,c_o_ID,o_ol_cnt,c_ID_cv(c_ID,c_last,balance,w_c_ID,c_credit,w_ID_cv(w_ID,w_name,w_city,w_tax)))}
+End: 121
+DataModel 128	 done
+End: 127
+DataModel 130	 done
+End: 129
+DataModel 127	 done
+End: 126
+DataModel 132	 done
+DataModel 131	 done
+End: 131
+DataModel 134	 done
+End: 130
+DataModel 133	 done
+End: 133
+End: 132
+DataModel 135	 done
+End: 134
+
+[Process exited successfully]

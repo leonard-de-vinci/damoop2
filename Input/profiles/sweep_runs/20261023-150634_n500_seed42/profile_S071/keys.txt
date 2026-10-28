@@ -1,0 +1,13 @@
+w_ID,4,1/Warehouse,pk
+w_name,50,1/Warehouse,null
+w_city,50,1/Warehouse,null
+w_tax,8,2/Warehouse,null
+c_ID,4,1/Customer,pk
+c_last,50,6/Customer,null
+balance,8,1/Customer,null
+c_credit,4,6/Customer,null
+w_c_ID,4,1/Warehouse,fk
+o_ID,4,1/Order,pk
+o_carrier_id,4,20/Order,null
+o_ol_cnt,4,53/Order,null
+c_o_ID,4,1/Customer,fk

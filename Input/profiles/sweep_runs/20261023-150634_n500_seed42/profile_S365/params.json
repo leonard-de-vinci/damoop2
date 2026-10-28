@@ -1,0 +1,26 @@
+{
+  "profile_id": "S365",
+  "seed_idx": 365,
+  "selectivities": {
+    "w_name": 2,
+    "w_city": 12,
+    "w_tax": 7,
+    "c_last": 2,
+    "balance": 4,
+    "c_credit": 5,
+    "o_carrier_id": 47,
+    "o_ol_cnt": 10
+  },
+  "index_flags": {
+    "w_name": false,
+    "w_city": true,
+    "w_tax": true,
+    "c_last": false,
+    "balance": true,
+    "c_credit": true,
+    "o_carrier_id": true,
+    "o_ol_cnt": false
+  },
+  "customer_count": 16596670,
+  "order_count": 2611142
+}

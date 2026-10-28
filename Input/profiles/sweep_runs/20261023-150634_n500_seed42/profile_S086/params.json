@@ -1,0 +1,26 @@
+{
+  "profile_id": "S086",
+  "seed_idx": 86,
+  "selectivities": {
+    "w_name": 3,
+    "w_city": 2,
+    "w_tax": 28,
+    "c_last": 7,
+    "balance": 5,
+    "c_credit": 8,
+    "o_carrier_id": 507,
+    "o_ol_cnt": 73
+  },
+  "index_flags": {
+    "w_name": false,
+    "w_city": true,
+    "w_tax": true,
+    "c_last": false,
+    "balance": false,
+    "c_credit": true,
+    "o_carrier_id": false,
+    "o_ol_cnt": false
+  },
+  "customer_count": 19264099,
+  "order_count": 159145947
+}

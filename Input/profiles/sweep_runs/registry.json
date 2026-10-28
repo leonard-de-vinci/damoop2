@@ -1,0 +1,14 @@
+{
+  "active": "20261023-150634_n500_seed42",
+  "runs": [
+    {
+      "run_id": "20261023-150634_n500_seed42",
+      "label": "20261023-150634_n500_seed42",
+      "n": 500,
+      "seed": 42,
+      "created": "2026-10-23T15:06:35",
+      "sweep_dir": "Input/profiles/sweep_runs/20261023-150634_n500_seed42",
+      "archive_dir": "Output/sweep_runs/20261023-150634_n500_seed42"
+    }
+  ]
+}
