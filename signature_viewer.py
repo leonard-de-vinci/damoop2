@@ -13,59 +13,91 @@ def esc(s: str) -> str:
     return html.escape(s, quote=True)
 
 
-def fields_table(fields: list, entity: str) -> str:
-    color = ENTITY_COLORS.get(entity, "#EEEEEE")
-    rows = []
-    for f in fields:
-        if isinstance(f, Nested):
-            inner_color = ENTITY_COLORS.get(f.entity, "#EEEEEE")
+class Drawing:
+    """Builds the Graphviz source and remembers where each concept instance is drawn."""
+
+    def __init__(self, model):
+        self.model = model
+        self.instances = []   # (node, port, entity, attributes, path of enclosing ports)
+        self.n = 0
+
+    def port(self):
+        self.n += 1
+        return f"p{self.n}"
+
+    def fields_table(self, fields, entity, node, port, ancestors):
+        color = ENTITY_COLORS.get(entity, "#EEEEEE")
+        attrs = [f for f in fields if isinstance(f, str)]
+        self.instances.append((node, port, entity, set(attrs), ancestors))
+        rows = []
+        for f in fields:
+            if not isinstance(f, Nested):
+                rows.append(f'<TR><TD ALIGN="LEFT" BGCOLOR="{color}">{esc(f)}</TD></TR>')
+                continue
+            inner = ENTITY_COLORS.get(f.entity, "#EEEEEE")
+            p = self.port()
+            if f.multiplicity == "list":
+                title = f"[ {esc(f.entity)} ]"
+                frame = f'<TABLE BORDER="3" CELLBORDER="0" CELLSPACING="0" COLOR="#444444" STYLE="rounded">'
+            else:
+                title = f"{{ {esc(f.entity)} }}"
+                frame = f'<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#444444">'
             rows.append(
-                f'<TR><TD BGCOLOR="{inner_color}" CELLPADDING="4">'
-                f'<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" COLOR="#555555">'
-                f'<TR><TD BGCOLOR="{inner_color}"><B>{esc(f.entity)}</B></TD></TR>'
-                f'{fields_table(f.fields, f.entity)}</TABLE></TD></TR>'
+                f'<TR><TD PORT="{p}" BGCOLOR="{inner}" CELLPADDING="4">{frame}'
+                f'<TR><TD BGCOLOR="{inner}"><B>{title}</B></TD></TR>'
+                f'{self.fields_table(f.fields, f.entity, node, p, ancestors + [port])}</TABLE></TD></TR>'
             )
-        else:
-            rows.append(f'<TR><TD ALIGN="LEFT" BGCOLOR="{color}">{esc(f)}</TD></TR>')
-    return "".join(rows)
+        return "".join(rows)
+
+    def dot(self):
+        out = [
+            "digraph G {",
+            'graph [rankdir=LR, bgcolor="white", pad=0.3, nodesep=0.6, ranksep=1.0];',
+            'node [shape=plaintext, fontname="Helvetica", fontsize=11];',
+            'edge [fontname="Helvetica", fontsize=10, color="#555555", fontcolor="#333333"];',
+        ]
+        for c in self.model.collections:
+            cols = []
+            for i, part in enumerate(c.parts):
+                p = self.port()
+                head = f'<TR><TD BGCOLOR="#E9ECF2"><FONT POINT-SIZE="9">part {i + 1}</FONT></TD></TR>' if len(c.parts) > 1 else ""
+                cols.append(
+                    f'<TD PORT="{p}" VALIGN="TOP"><TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5">'
+                    f"{head}{self.fields_table(part, c.name, c.name, p, [])}</TABLE></TD>"
+                )
+            note = f' <FONT POINT-SIZE="9">split in {len(c.parts)}</FONT>' if len(c.parts) > 1 else ""
+            out.append(
+                f'"{c.name}" [label=<<TABLE BORDER="2" CELLBORDER="0" CELLSPACING="6" COLOR="{HEADER}">'
+                f'<TR><TD COLSPAN="{len(c.parts)}" BGCOLOR="{HEADER}"><FONT COLOR="white"><B>{esc(c.name)}</B>{note}</FONT></TD></TR>'
+                f'<TR>{"".join(cols)}</TR></TABLE>>];'
+            )
+        out += self.links()
+        out.append("}")
+        return "\n".join(out)
+
+    def links(self):
+        edges, seen = [], set()
+        for r in self.model.references:
+            left = [i for i in self.instances if r.left in i[3]]
+            right = [i for i in self.instances if r.right in i[3]]
+            for a in left:
+                for b in right:
+                    if a[0] == b[0] and (a[1] in b[4] or b[1] in a[4] or a[1] == b[1]):
+                        continue  # same instance, or one nested in the other
+                    # one edge per pair of concept instances, even if the concept is split
+                    pair = (a[0], a[2], tuple(a[4]), b[0], b[2], tuple(b[4]))
+                    if pair in seen:
+                        continue
+                    seen.add(pair)
+                    edges.append(
+                        f'"{a[0]}":{a[1]} -> "{b[0]}":{b[1]} '
+                        f'[label="{esc(r.name)}\\n{esc(r.left)} → {esc(r.right)}"];'
+                    )
+        return edges
 
 
 def model_to_dot(model) -> str:
-    lines = [
-        "digraph G {",
-        'graph [rankdir=LR, bgcolor="white", pad=0.3, nodesep=0.6, ranksep=1.0];',
-        'node [shape=plaintext, fontname="Helvetica", fontsize=11];',
-        'edge [fontname="Helvetica", fontsize=10, color="#555555", fontcolor="#333333"];',
-    ]
-    for c in model.collections:
-        cols = []
-        for i, part in enumerate(c.parts):
-            label = f"part {i + 1}" if len(c.parts) > 1 else ""
-            head = f'<TR><TD BGCOLOR="#E9ECF2"><FONT POINT-SIZE="9">{label}</FONT></TD></TR>' if label else ""
-            cols.append(
-                f'<TD VALIGN="TOP"><TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5">'
-                f"{head}{fields_table(part, c.name)}</TABLE></TD>"
-            )
-        split_note = f' <FONT POINT-SIZE="9">split in {len(c.parts)}</FONT>' if len(c.parts) > 1 else ""
-        table = (
-            f'<<TABLE BORDER="2" CELLBORDER="0" CELLSPACING="6" COLOR="{HEADER}">'
-            f'<TR><TD COLSPAN="{len(c.parts)}" BGCOLOR="{HEADER}"><FONT COLOR="white"><B>{esc(c.name)}</B>{split_note}</FONT></TD></TR>'
-            f'<TR>{"".join(cols)}</TR></TABLE>>'
-        )
-        lines.append(f'"{c.name}" [label={table}];')
-
-    def owner(key):
-        for c in model.collections:
-            if any(key in [f for f in p if isinstance(f, str)] for p in c.parts):
-                return c.name
-        return None
-
-    for r in model.references:
-        a, b = owner(r.left), owner(r.right)
-        if a and b and a != b:
-            lines.append(f'"{a}" -> "{b}" [label="{esc(r.name)}\\n{esc(r.left)} → {esc(r.right)}"];')
-    lines.append("}")
-    return "\n".join(lines)
+    return Drawing(model).dot()
 
 
 st.set_page_config(page_title="Signature viewer", layout="wide")
@@ -78,26 +110,52 @@ def get_models():
 
 
 models = get_models()
-by_path = {m.path.replace("\\", "/"): m for m in models}
+by_path = {m.path: m for m in models}
+children = {}
+for m in models:
+    if m.parent_path:
+        children.setdefault(m.parent_path, []).append(m)
+
+if "sel" not in st.session_state:
+    st.session_state.sel = 0
+
+
+def goto(i):
+    st.session_state.sel = i
+    st.session_state.query = ""
+    st.session_state.kind = "All"
+
 
 with st.sidebar:
-    kind = st.radio("Filter", ["All", "Splits only", "Merges only", "Splits + merges"], index=0)
+    query = st.text_input("Search", key="query", placeholder="M42, Customer, Merge_c_o_ID…")
+    kind = st.radio("Filter", ["All", "Splits only", "Merges only", "Splits + merges"], key="kind")
+    q = query.strip().lower().lstrip("m")
     pool = [
         m for m in models
-        if kind == "All"
-        or (kind == "Splits only" and m.n_splits and not m.n_merges)
-        or (kind == "Merges only" and m.n_merges and not m.n_splits)
-        or (kind == "Splits + merges" and m.n_splits and m.n_merges)
+        if (kind == "All"
+            or (kind == "Splits only" and m.n_splits and not m.n_merges)
+            or (kind == "Merges only" and m.n_merges and not m.n_splits)
+            or (kind == "Splits + merges" and m.n_splits and m.n_merges))
+        and (not q
+             or (q.isdigit() and m.index == int(q))
+             or (not q.isdigit() and (query.lower() in m.signature.lower() or query.lower() in m.path.lower())))
     ]
     st.caption(f"{len(pool)}/{len(models)}")
-    idx = st.selectbox(
-        "Model",
-        [m.index for m in pool],
+    if not pool:
+        st.stop()
+    ids = [m.index for m in pool]
+    if st.session_state.sel not in ids:
+        st.session_state.sel = ids[0]
+    st.selectbox(
+        "Model", ids, key="sel",
         format_func=lambda i: f"M{i}  ({models[i].n_splits} split, {models[i].n_merges} merge)",
     )
     compare = st.checkbox("Compare with parent")
 
-model = models[idx]
+model = models[st.session_state.sel]
+parent = by_path.get(model.parent_path) if model.parent_path else None
+kids = children.get(model.path, [])
+siblings = [m for m in children.get(model.parent_path, []) if m.index != model.index] if parent else []
 
 c1, c2, c3, c4 = st.columns(4)
 c1.metric("Model", f"M{model.index}")
@@ -105,21 +163,43 @@ c2.metric("Collections", len(model.collections))
 c3.metric("References", len(model.references))
 c4.metric("Depth", len(model.steps))
 
-st.markdown("`" + " / ".join(["M0"] + model.steps) + "`")
+# breadcrumb: every ancestor is clickable
+crumbs, p = [], model
+while p is not None:
+    crumbs.insert(0, p)
+    p = by_path.get(p.parent_path) if p.parent_path else None
+bc = st.columns(len(crumbs) + 1)
+for col, m in zip(bc, crumbs):
+    col.button(f"M{m.index}", key=f"bc{m.index}", on_click=goto, args=(m.index,),
+               disabled=m.index == model.index, help=m.steps[-1] if m.steps else "root")
+    
 
-parent = by_path.get(model.parent_path) if model.parent_path else None
+def nav_row(title, items):
+    if not items:
+        return
+    st.caption(f"{title} ({len(items)})")
+    cols = st.columns(min(len(items), 6))
+    for k, m in enumerate(items):
+        cols[k % len(cols)].button(f"M{m.index} · {m.steps[-1]}", key=f"{title}{m.index}", on_click=goto, args=(m.index,))
+
+
+with st.expander("Children and siblings", expanded=bool(kids)):
+    nav_row("Children", kids)
+    nav_row("Siblings", siblings)
+
 if compare and parent:
     left, right = st.columns(2)
     with left:
-        st.subheader(f"Parent: M{parent.index}")
+        st.subheader(f"M{parent.index}")
         st.graphviz_chart(model_to_dot(parent), use_container_width=True)
     with right:
-        st.subheader(f"This model: M{model.index}")
+        st.subheader(f"M{model.index}")
         st.graphviz_chart(model_to_dot(model), use_container_width=True)
 else:
-    if compare and not parent:
+    if compare:
         st.info("M0 has no parent.")
     st.graphviz_chart(model_to_dot(model), use_container_width=True)
 
 with st.expander("Signature"):
+    st.code(model.signature, language="text")
     st.code(describe(model), language="text")

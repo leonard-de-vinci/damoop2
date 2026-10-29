@@ -1,17 +1,4 @@
-"""
-Parse DaMoOp model signatures (Output/signatures_TPC_C.txt) into Python objects.
-
-File format: lines come in pairs
-    <signature>
-    <folder path>   e.g. Output/GeneratedDMs/Split_r_Warehouse_1/
-
-Signature format, collections separated by "|":
-    Warehouse{(w_ID,w_city);(w_ID,w_name)}   -> a collection; ";" separates the parts of a SPLIT
-    Order{(o_ID,...,c_ID_cv(c_ID,c_last))}  -> "xxx_cv(...)" is an entity NESTED by a MERGE
-    orders(c_ID,c_o_ID)                      -> a REFERENCE (join link) between two collections
-
-Run `python -m lib.signatures` from the repo root to print a summary.
-"""
+"""Parser for DaMoOp model signatures."""
 from __future__ import annotations
 
 import re
@@ -23,38 +10,37 @@ SIGNATURES_FILE = Path("Output/signatures_TPC_C.txt")
 
 @dataclass
 class Nested:
-    """An entity nested inside another one by a merge (written xxx_cv(...))."""
-    key: str                      # e.g. "c_ID"
-    entity: str                   # e.g. "Customer" (resolved from the key)
-    fields: list                  # plain field names (str) and Nested objects
+    """A concept nested in another one by a merge, written <key>_cv(...)."""
+    key: str
+    entity: str
+    multiplicity: str             # "list" or "single"
+    fields: list
 
 
 @dataclass
 class Collection:
-    """One stored collection. Several parts = the entity was split."""
     name: str
-    parts: list                   # list of parts; each part is a list of str / Nested
+    parts: list                   # one part per row; several rows = split
 
 
 @dataclass
 class Reference:
-    """A join link between two collections, e.g. orders(c_ID, c_o_ID)."""
     name: str
-    left: str
-    right: str
+    left: str                     # key on the "one" side
+    right: str                    # foreign key on the "many" side
 
 
 @dataclass
 class Model:
-    index: int                    # 0 = the original normalized model
-    path: str                     # folder path from the file
-    steps: list                   # e.g. ["Split_r_Warehouse_1"]
+    index: int
+    path: str
+    signature: str
+    steps: list
     collections: list = field(default_factory=list)
     references: list = field(default_factory=list)
 
     @property
     def parent_path(self) -> str | None:
-        """Folder path of the model this one was derived from (None for the original)."""
         if not self.steps:
             return None
         return "Output/GeneratedDMs/" + "".join(s + "/" for s in self.steps[:-1])
@@ -68,10 +54,15 @@ class Model:
         return sum(s.startswith("Merge") for s in self.steps)
 
 
-# ---------------------------------------------------------------- helpers
+@dataclass
+class Context:
+    """What we learn from M0 and reuse to read every other signature."""
+    field_owner: dict             # attribute -> concept that owns it in M0
+    foreign_keys: set             # attributes on the "many" side of a reference
+
 
 def split_top(text: str, sep: str) -> list[str]:
-    """Split on `sep`, ignoring separators inside parentheses or braces."""
+    """Split on sep, ignoring separators inside () or {}."""
     out, depth, cur = [], 0, ""
     for ch in text:
         if ch in "({":
@@ -87,36 +78,37 @@ def split_top(text: str, sep: str) -> list[str]:
     return [s.strip() for s in out if s.strip()]
 
 
-def parse_fields(text: str, key_to_entity: dict) -> list:
-    """'a,b,c_ID_cv(c_ID,x)' -> ['a', 'b', Nested(...)]."""
+def parse_fields(text: str, ctx: Context | None) -> list:
     fields = []
     for tok in split_top(text, ","):
         m = re.fullmatch(r"(\w+?)_cv\((.*)\)", tok)
-        if m:
-            key = m.group(1)
-            fields.append(Nested(key, key_to_entity.get(key, key), parse_fields(m.group(2), key_to_entity)))
-        else:
+        if not m:
             fields.append(tok)
+            continue
+        key = m.group(1)
+        entity = ctx.field_owner.get(key, key) if ctx else key
+        # The concept holding the foreign key is the "many" side:
+        # nested in the other concept it becomes a list, otherwise a single document.
+        multiplicity = "list" if ctx and key in ctx.foreign_keys else "single"
+        fields.append(Nested(key, entity, multiplicity, parse_fields(m.group(2), ctx)))
     return fields
 
 
-def parse_signature(sig: str, key_to_entity: dict) -> tuple[list, list]:
+def parse_signature(sig: str, ctx: Context | None) -> tuple[list, list]:
     collections, references = [], []
     for tok in split_top(sig, "|"):
         m = re.fullmatch(r"(\w+)\{(.*)\}", tok)
         if m:
-            parts = [parse_fields(p.strip()[1:-1], key_to_entity) for p in split_top(m.group(2), ";")]
+            parts = [parse_fields(p.strip()[1:-1], ctx) for p in split_top(m.group(2), ";")]
             collections.append(Collection(m.group(1), parts))
             continue
         m = re.fullmatch(r"(\w+)\((\w+),(\w+)\)", tok)
         if m:
             references.append(Reference(*m.groups()))
             continue
-        raise ValueError(f"Unrecognized token: {tok!r}")
+        raise ValueError(f"Unrecognised token: {tok!r}")
     return collections, references
 
-
-# ---------------------------------------------------------------- main API
 
 def load_models(path: Path | str = SIGNATURES_FILE) -> list[Model]:
     lines = [l.strip() for l in Path(path).read_text(encoding="utf-8").splitlines() if l.strip()]
@@ -124,24 +116,35 @@ def load_models(path: Path | str = SIGNATURES_FILE) -> list[Model]:
         raise ValueError("Expected pairs of lines (signature, folder path)")
     pairs = list(zip(lines[0::2], lines[1::2]))
 
-    # The first model is the normalized one: its first field in each collection is the key.
-    first_cols, _ = parse_signature(pairs[0][0], {})
-    key_to_entity = {c.parts[0][0]: c.name for c in first_cols}
+    m0_cols, m0_refs = parse_signature(pairs[0][0], None)
+    ctx = Context(
+        field_owner={f: c.name for c in m0_cols for p in c.parts for f in p if isinstance(f, str)},
+        foreign_keys={r.right for r in m0_refs},
+    )
 
     models = []
     for i, (sig, folder) in enumerate(pairs):
-        rel = folder.replace("\\", "/").split("GeneratedDMs/", 1)[-1]
+        folder = folder.replace("\\", "/")
+        rel = folder.split("GeneratedDMs/", 1)[-1]
         steps = [s for s in rel.split("/") if s]
-        cols, refs = parse_signature(sig, key_to_entity)
-        models.append(Model(i, folder, steps, cols, refs))
+        cols, refs = parse_signature(sig, ctx)
+        models.append(Model(i, folder, sig, steps, cols, refs))
     return models
 
 
 def describe(model: Model) -> str:
-    """Short human-readable description, used by the viewer and the CLI."""
     def fmt(fields):
-        return ", ".join(f if isinstance(f, str) else f"[{f.entity}: {fmt(f.fields)}]" for f in fields)
-    lines = [f"Model {model.index}  ({model.n_splits} split, {model.n_merges} merge)  {'/'.join(model.steps) or 'original'}"]
+        out = []
+        for f in fields:
+            if isinstance(f, str):
+                out.append(f)
+            elif f.multiplicity == "list":
+                out.append(f"[{f.entity}: {fmt(f.fields)}]")
+            else:
+                out.append(f"{{{f.entity}: {fmt(f.fields)}}}")
+        return ", ".join(out)
+
+    lines = [f"M{model.index}  ({model.n_splits} split, {model.n_merges} merge)  {'/'.join(model.steps) or 'M0'}"]
     for c in model.collections:
         lines.append(f"  {c.name}: " + " | ".join(f"({fmt(p)})" for p in c.parts))
     for r in model.references:
