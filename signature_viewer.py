@@ -3,7 +3,9 @@ import html
 
 import streamlit as st
 
+from lib.costs import costs_at, load_costs, model_key
 from lib.signatures import Nested, describe, load_models
+from lib.stats import counts_at, load_stats, model_stats
 
 ENTITY_COLORS = {"Customer": "#CDEFE3", "Order": "#FFE3B8", "Warehouse": "#D6E4FF"}
 HEADER = "#1F2A44"
@@ -110,6 +112,8 @@ def get_models():
 
 
 models = get_models()
+stats = st.cache_data(load_stats)()
+costs = st.cache_data(load_costs)()
 by_path = {m.path: m for m in models}
 children = {}
 for m in models:
@@ -151,17 +155,45 @@ with st.sidebar:
         format_func=lambda i: f"M{i}  ({models[i].n_splits} split, {models[i].n_merges} merge)",
     )
     compare = st.checkbox("Compare with parent")
+    varying = [c for c, v in stats.volumes.items() if len(v) > 1]
+    n_steps = max(len(v) for v in stats.volumes.values())
+    step = st.select_slider(
+        "Volume", range(n_steps),
+        format_func=lambda k: ", ".join(f"{counts_at(stats, k)[c]:,.0f} {c}" for c in varying) or str(k),
+    )
+    servers = st.select_slider("Servers", stats.servers)
+
+volume_key = counts_at(stats, step)[varying[0]] if varying else None
+cost_table = costs_at(costs, volume_key, servers) if costs is not None else None
 
 model = models[st.session_state.sel]
 parent = by_path.get(model.parent_path) if model.parent_path else None
 kids = children.get(model.path, [])
 siblings = [m for m in children.get(model.parent_path, []) if m.index != model.index] if parent else []
 
-c1, c2, c3, c4 = st.columns(4)
+rows = model_stats(model, stats, step)
+volume = sum(r["Volume (GB)"] for r in rows)
+c1, c2, c3, c4, c5 = st.columns(5)
 c1.metric("Model", f"M{model.index}")
 c2.metric("Collections", len(model.collections))
 c3.metric("References", len(model.references))
 c4.metric("Depth", len(model.steps))
+if parent:
+    pv = sum(r["Volume (GB)"] for r in model_stats(parent, stats, step))
+    c5.metric("Volume", f"{volume:,.2f} GB", f"{volume - pv:+,.2f} GB vs parent", delta_color="inverse")
+else:
+    c5.metric("Volume", f"{volume:,.2f} GB")
+
+if cost_table is None:
+    st.caption("No costs yet: run the pipeline, then python -m scripts.export_costs")
+else:
+    here = cost_table.loc[model_key(model)]
+    before = cost_table.loc[model_key(parent)] if parent else None
+    ranks = cost_table.rank()
+    for col, (name, unit) in zip(st.columns(3), [("Time", "s"), ("Carbon", "kg CO2e"), ("Financial", "€")]):
+        delta = f"{(here[name] / before[name] - 1) * 100:+.1f}% vs parent" if before is not None else None
+        col.metric(f"{name} · rank {ranks.loc[model_key(model), name]:.0f}/{len(cost_table)}",
+                   f"{here[name]:,.4g} {unit}", delta, delta_color="inverse")
 
 # breadcrumb: every ancestor is clickable
 crumbs, p = [], model
@@ -186,6 +218,16 @@ def nav_row(title, items):
 with st.expander("Children and siblings", expanded=bool(kids)):
     nav_row("Children", kids)
     nav_row("Siblings", siblings)
+    if cost_table is not None and (kids or siblings or parent):
+        here = cost_table.loc[model_key(model)]
+        near = [("parent", parent)] * bool(parent) + [("child", m) for m in kids] + [("sibling", m) for m in siblings]
+        st.dataframe(
+            [{"Model": f"M{m.index}", "Relation": rel, "Step": m.steps[-1] if m.steps else "root",
+              **{f"{k} vs M{model.index}": f"{(cost_table.loc[model_key(m), k] / here[k] - 1) * 100:+.1f}%"
+                 for k in ("Time", "Carbon", "Financial")}}
+             for rel, m in near],
+            hide_index=True, use_container_width=True,
+        )
 
 if compare and parent:
     left, right = st.columns(2)
@@ -199,6 +241,11 @@ else:
     if compare:
         st.info("M0 has no parent.")
     st.graphviz_chart(model_to_dot(model), use_container_width=True)
+
+with st.expander("Statistics", expanded=True):
+    st.dataframe(rows, hide_index=True, use_container_width=True,
+                 column_config={"Volume (GB)": st.column_config.NumberColumn(format="%.4f"),
+                                "Documents": st.column_config.NumberColumn(format="%d")})
 
 with st.expander("Signature"):
     st.code(model.signature, language="text")
