@@ -1,0 +1,21 @@
+Q1 — Preliminary mapping
+
+Source: custom workload, Table 6.
+Accessed entity: Order.
+Filter: Order ID, one value.
+Normalised filter attribute: o_id.
+
+Assumption requiring confirmation:
+All seven Order attributes are returned.
+
+Proposed DMG fields:
+o_id,o_customer,o_carrier,o_payment,o_totalprice,o_date,o_deliverydate
+
+Proposed cost-query definition:
+select,o_id,o_customer,o_carrier,o_payment,o_totalprice,o_date,o_deliverydate,from,Order,where,o_id
+
+Pending:
+Confirm the projection.
+Determine result size using DaMoOp's size convention.
+Define workload frequency and maximum execution time.
+Test acceptance by the cost-calculation component.
