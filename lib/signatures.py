@@ -5,6 +5,8 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from lib.schema import SCHEMA_FILE, load_schema
+
 SIGNATURES_FILE = Path("Output/signatures_TPC_C.txt")
 
 
@@ -56,9 +58,11 @@ class Model:
 
 @dataclass
 class Context:
-    """What we learn from M0 and reuse to read every other signature."""
-    field_owner: dict             # attribute -> concept that owns it in M0
+    """What we know about the input schema, used to read every signature."""
+    field_owner: dict             # attribute -> concept that owns it
     foreign_keys: set             # attributes on the "many" side of a reference
+    primary_keys: dict = field(default_factory=dict)  # concept -> primary key
+    concepts: list = field(default_factory=list)      # concept names, schema order
 
 
 def split_top(text: str, sep: str) -> list[str]:
@@ -110,17 +114,25 @@ def parse_signature(sig: str, ctx: Context | None) -> tuple[list, list]:
     return collections, references
 
 
-def load_models(path: Path | str = SIGNATURES_FILE) -> list[Model]:
+def build_context(m0_signature: str, schema_path: Path | str = SCHEMA_FILE) -> Context:
+    """Keys and links from the input schema; falls back to M0's signature line."""
+    schema = load_schema(schema_path)
+    if schema is not None:
+        return Context(schema.owner, set(schema.foreign_keys) | {t for _, _, t in schema.references},
+                       schema.primary_keys, schema.concepts)
+    cols, refs = parse_signature(m0_signature, None)
+    owner = {f: c.name for c in cols for p in c.parts for f in p if isinstance(f, str)}
+    pks = {r.left: owner[r.left] for r in refs if r.left in owner}
+    return Context(owner, {r.right for r in refs}, {c: k for k, c in pks.items()}, [c.name for c in cols])
+
+
+def load_models(path: Path | str = SIGNATURES_FILE, schema_path: Path | str = SCHEMA_FILE) -> list[Model]:
     lines = [l.strip() for l in Path(path).read_text(encoding="utf-8").splitlines() if l.strip()]
     if len(lines) % 2:
         raise ValueError("Expected pairs of lines (signature, folder path)")
     pairs = list(zip(lines[0::2], lines[1::2]))
 
-    m0_cols, m0_refs = parse_signature(pairs[0][0], None)
-    ctx = Context(
-        field_owner={f: c.name for c in m0_cols for p in c.parts for f in p if isinstance(f, str)},
-        foreign_keys={r.right for r in m0_refs},
-    )
+    ctx = build_context(pairs[0][0], schema_path)
 
     models = []
     for i, (sig, folder) in enumerate(pairs):

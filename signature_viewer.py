@@ -4,11 +4,15 @@ import html
 import streamlit as st
 
 from lib.costs import costs_at, load_costs, model_key
-from lib.signatures import Nested, describe, load_models
+from lib.signatures import Nested, build_context, describe, load_models
 from lib.stats import counts_at, load_stats, model_stats
 
-ENTITY_COLORS = {"Customer": "#CDEFE3", "Order": "#FFE3B8", "Warehouse": "#D6E4FF"}
+# one light colour per concept, given in schema order, so any input schema works
+PALETTE = ["#D6E4FF", "#CDEFE3", "#FFE3B8", "#F6D5E5", "#E6DDF7", "#FFF3B0", "#D5F0F4", "#EADBC8"]
 HEADER = "#1F2A44"
+SAME_KEY = "#2F7D6D"
+ENTITY_COLORS: dict = {}
+PRIMARY_KEYS: dict = {}
 
 
 def esc(s: str) -> str:
@@ -74,6 +78,7 @@ class Drawing:
                 f'<TR>{"".join(cols)}</TR></TABLE>>];'
             )
         out += self.links()
+        out += self.copy_links()
         out.append("}")
         return "\n".join(out)
 
@@ -98,6 +103,33 @@ class Drawing:
         return edges
 
 
+    def copy_links(self):
+        """Dashed link between copies of the same concept, through its primary key.
+
+        A merge can leave a concept in two places (e.g. Customer top-level and
+        nested in Warehouse): the copies share the key, so the link stays visible.
+        """
+        edges = []
+        for entity, pk in PRIMARY_KEYS.items():
+            copies = {}
+            for inst in self.instances:
+                if inst[2] == entity and pk in inst[3]:
+                    copies.setdefault((inst[0], tuple(inst[4])), inst)  # split parts of one copy count once
+            groups = list(copies.values())
+            if len(groups) < 2:
+                continue
+            main = next((g for g in groups if not g[4]), groups[0])  # prefer the top-level copy
+            for g in groups:
+                if g is main or (g[0] == main[0] and (main[1] in g[4] or g[1] in main[4])):
+                    continue
+                edges.append(
+                    f'"{g[0]}":{g[1]} -> "{main[0]}":{main[1]} '
+                    f'[style=dashed, color="{SAME_KEY}", fontcolor="{SAME_KEY}", arrowhead=none, '
+                    f'label="same {esc(entity)}\n{esc(pk)}"];'
+                )
+        return edges
+
+
 def model_to_dot(model) -> str:
     return Drawing(model).dot()
 
@@ -112,6 +144,10 @@ def get_models():
 
 
 models = get_models()
+_ctx = build_context(models[0].signature)
+PRIMARY_KEYS.update(_ctx.primary_keys)
+for _i, _c in enumerate(_ctx.concepts):
+    ENTITY_COLORS[_c] = PALETTE[_i % len(PALETTE)]
 stats = st.cache_data(load_stats)()
 costs = st.cache_data(load_costs)()
 by_path = {m.path: m for m in models}
