@@ -108,7 +108,7 @@ st.sidebar.markdown(
 # ---------------------------------------------------------------------------
 # Sidebar — navigation  (page persisted via URL query param)
 # ---------------------------------------------------------------------------
-PAGES = ["Input Configuration", "Pipeline", "Cost Analysis", "Profile Sweep", "Scenario Analysis", "Predict", "History"]
+PAGES = ["Input Configuration", "Pipeline", "Cost Analysis", "Signature Viewer", "Profile Sweep", "Scenario Analysis", "Predict", "History"]
 
 # On refresh the browser re-sends the URL, so read the query param first
 _qp_page = st.query_params.get("page", "")
@@ -183,6 +183,7 @@ page_subtitles = {
     "Pipeline":            "Run DMG and Cost Calculation phases",
     "Input Configuration": "Edit queries, schema, config, and server settings",
     "Cost Analysis":       "Visualize and compare cost results",
+    "Signature Viewer":    "Draw, navigate and compare the generated data models",
     "Scenario Analysis":   "Create parameter variations and compare model rankings",
     "Profile Sweep":       "Generate parametric profiles for ML training data",
     "Predict":             "Live cost prediction from schema + workload (trained model)",
@@ -212,6 +213,9 @@ elif page == "Input Configuration":
 elif page == "Cost Analysis":
     from views import cost_analysis
     cost_analysis.render()
+elif page == "Signature Viewer":
+    from views import signature_viewer
+    signature_viewer.render()
 elif page == "Scenario Analysis":
     from views import scenario_analysis
     scenario_analysis.render()
